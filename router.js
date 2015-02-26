@@ -11,6 +11,8 @@ function router(arrayOfAppliances){
 		for(var i = 0; i < this.connectedAppliances.length; i++){
 			if(appName.toLowerCase() == this.connectedAppliances[i].getName().toLowerCase()){
 				this.connectedAppliances[i].on = false;
+				//SAM ADDED 
+				changeImage();
 			}
 		}
 	}
@@ -19,6 +21,8 @@ function router(arrayOfAppliances){
 		for(var i = 0; i < this.connectedAppliances.length; i++){
 			if(appName.toLowerCase() == this.connectedAppliances[i].getName().toLowerCase()){
 				this.connectedAppliances[i].on = true;
+				//SAM ADDED 
+				changeImage();
 			}
 		}
 	}
@@ -52,6 +56,7 @@ function router(arrayOfAppliances){
 	this.turnOffAppliances = function(){
 		for(var i = 0; i < this.connectedAppliances.length; i++){
 			this.connectedAppliances[i].on = false;
+			
 		}
 	}
 	// function to remove an appliance from a router

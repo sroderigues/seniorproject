@@ -1,0 +1,84 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Helvetica, "Helvetica Neue", sans-serif;
+	background-color: #e2e2e2;
+	font-size: 12px;
+	color: #000;
+}
+h1,h2,h3 {
+}
+#left-column {
+	position: absolute;
+	z-index: 1000;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	
+	width: 250px;
+	background-color: #222;
+}
+#right-column {
+	margin-left: 250px;
+}
+.section {
+	background-color: #fff;
+}
+.section-header {
+	padding-top: 7px;
+	padding-bottom: 7px;
+	padding-left: 9px;
+	border-bottom: 1px solid #f2f2f2;
+}
+.section-header h3 {
+	margin: 0;
+	padding-left: 7px;
+	padding-right: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	
+	font-size: 1.25em;
+	display: inline;
+	vertical-align: middle;
+}
+.header-icon {
+	vertical-align: middle;
+}
+.cost-data-block {
+	float: left;
+	height: 150px; /* related to cost-data height */
+	width: 25%;
+}
+.cost-data-content{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#cost-data {
+	height: 188px; /* cost-data-block + cost-header */
+}
+.dollar-sign {
+	color: #27ae60;
+	margin-right: 5px;
+}
+.block-data {
+	text-align: center;
+	padding-top: 20px;
+	font-size: 3.25em;
+	color: #333;
+}
+.block-header{
+	text-align: center;
+}
+
+#left-column {
+	color: #fff;
+}
+
+#left-column .section {
+	background-color: #222;
+	border: none;
+}
+#left-column .section-header {
+	border:none;
+	background-color: #333;
+}

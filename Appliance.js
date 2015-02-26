@@ -36,6 +36,7 @@ function Appliance(n, p){
 	}
 	// function to turn device on
 	this.turnOn = function(time, line){
+		changeImage();
 		// create message to be sent to output console
 		if(line < 10){
 			var message = line + ".   | " + this.applianceName + " powered on at " + time + ". Now using: " + this.powerConsumption + " watts.\n";
@@ -52,6 +53,7 @@ function Appliance(n, p){
 	}
 	// function to turn device off
 	this.turnOff = function(time, line){
+		changeImage();
 		// create message to be sent to output console
 		if(line < 10){
 			var message = line + ".   | " + this.applianceName + " powered off at " + time + "\n";

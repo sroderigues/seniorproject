@@ -9,15 +9,15 @@
 		<script type="text/javascript" src="Appliance.js"></script>
 			<script type="text/javascript" src="router.js"></script>
 		<script>
-				var cpu = new Appliance("Computer", 3400);
-				var microwave = new Appliance("Microwave", 1500);
+				//var cpu = new Appliance("Computer", 3400);
+				//var microwave = new Appliance("Microwave", 1500);
 				var lights = new Appliance("Lights", 2000);
-				var fridge = new Appliance("Fridge", 2300);
-				var applianceArray = [lights, fridge, cpu, microwave];
+				//var fridge = new Appliance("Fridge", 2300);
+				var applianceArray = [lights/*, fridge, cpu, microwave*/];
 				var testRouter = new router(applianceArray);
 				testRouter.getConnectedAppliances();
-				var freeze = new Appliance("Freezer", 2000);
-				testRouter.addConnectedAppliance(freeze);
+				//var freeze = new Appliance("Freezer", 2000);
+				//testRouter.addConnectedAppliance(freeze);
 			</script>
 		<div id="left-column">
 			<div class="section" id="appliance-container">
@@ -27,7 +27,7 @@
 				<!--SAM ADDED HERE v -->
 				<br>
 				<center>
-					<img id="myImage",<!--onclick="changeImage()" --> src="pic_bulboff.gif" width="100" height="180">
+					<img id="myImage" src="pic_bulboff.gif" width="100" height="180">
 					<p><strong>Lights<!--have to get element name here so not hard coded--></strong></p>
 				</center>
 				<!--SAM ADDED HERE ^ -->
@@ -195,10 +195,12 @@
 				addEltToSVG(mysvg, "rect", {"x": 40, "y": 295, "width": 1000,"height": 2,"fill": "black"});
 				for(var i = 0; i < applianceArray.length; i++){
 					if(hour%3 == 0){
-						applianceArray[i].turnOn(hour, lineNumber);
+						//applianceArray[i].turnOn(hour, lineNumber);
+						applianceArray[0].turnOn(hour, lineNumber);
 						lineNumber++;
 					}else if(applianceArray[i].checkOn() == true){
-						applianceArray[i].turnOff(hour, lineNumber);
+						//applianceArray[i].turnOff(hour, lineNumber);
+						applianceArray[0].turnOff(hour, lineNumber);
 						lineNumber++;
 					}else{
 						applianceArray[i].idleFunction(lineNumber);
