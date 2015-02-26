@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Simulation Results</title>
+		<link rel="stylesheet" type="text/css" href="main.css"/>
+		<script type="text/javascript" src="d3.v3.min.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript" src="Appliance.js"></script>
+			<script type="text/javascript" src="router.js"></script>
+		<script>
+				var cpu = new Appliance("Computer", 3400);
+				var microwave = new Appliance("Microwave", 1500);
+				var lights = new Appliance("Lights", 2000);
+				var fridge = new Appliance("Fridge", 2300);
+				var applianceArray = [lights, fridge, cpu, microwave];
+				var testRouter = new router(applianceArray);
+				testRouter.getConnectedAppliances();
+				var freeze = new Appliance("Freezer", 2000);
+				testRouter.addConnectedAppliance(freeze);
+			</script>
+		<div id="left-column">
+			<div class="section" id="appliance-container">
+				<div class="section-header" id="appliances-header">
+					<h3>Appliances</h3>
+				</div>
+				<!--SAM ADDED HERE v -->
+				<br>
+				<center>
+					<img id="myImage",<!--onclick="changeImage()" --> src="pic_bulboff.gif" width="100" height="180">
+					<p><strong>Lights<!--have to get element name here so not hard coded--></strong></p>
+				</center>
+				<!--SAM ADDED HERE ^ -->
+			</div>
+		</div>
+		<div id="right-column">
+			<div class="section" id="energy-graph">
+				<div class="section-header" id="energy-graph-header">
+					<img src="graph-icon.png" class="highres-img header-icon"/>
+					<h3>Energy Consumption</h3>
+				</div>
+				<div id="d3-graph">
+				<svg id="realtime-graph" width="1000" height="400">
+					<text x="1" y = "315"> Hour </text>
+					<text x="57" y="315"> 1 </text>
+					<text x="95" y="315"> 2 </text>
+					<text x="135" y="315"> 3 </text>
+					<text x="175" y="315"> 4 </text>
+					<text x="213" y="315"> 5 </text>
+					<text x="252" y="315"> 6 </text>
+					<text x="293" y="315"> 7 </text>
+					<text x="334" y="315"> 8 </text>
+					<text x="370" y="315"> 9 </text>
+					<text x="407" y="315"> 10 </text>
+					<text x="447" y="315"> 11 </text>
+					<text x="487" y="315"> 12 </text>
+					<text x="530" y="315"> 13 </text>
+					<text x="570" y="315"> 14 </text>
+					<text x="610" y="315"> 15 </text>
+					<text x="650" y="315"> 16 </text>
+					<text x="691" y="315"> 17 </text>
+					<text x="731" y="315"> 18 </text>
+					<text x="770" y="315"> 19 </text>
+					<text x="810" y="315"> 20 </text>
+					<text x="847" y="315"> 21 </text>
+					<text x="890" y="315"> 22 </text>
+					<text x="930" y="315"> 23 </text>
+					<text x="970" y="315"> 24 </text>
+				</svg>
+				</div>
+			</div>
+			<div class="section" id="cost-data">
+				<div class="section-header" id="cost-header">
+					<img src="cost-icon.png" class="highres-img header-icon"/>
+					<h3>Energy Cost</h3>
+				</div>
+				<div class="cost-data-block" id="day-cost-data">
+					<div class="cost-data-content">
+						<div class="block-header" id="day-cost-header">
+							<h3>Per Day</h3>
+						</div>
+						<div class="block-data" id="day-data">
+							<span class="dollar-sign">$</span>10
+						</div>
+					</div>
+				</div>
+				<div class="cost-data-block" id="week-cost-data">
+					<div class="cost-data-content">
+						<div class="block-header" id="week-cost-header">
+							<h3>Per Week</h3>
+						</div>
+						<div class="block-data" id="week-data">
+							<span class="dollar-sign">$</span>70
+						</div>
+					</div>
+				</div>
+				<div class="cost-data-block" id="month-cost-data">
+					<div class="cost-data-content">
+						<div class="block-header" id="month-cost-header">
+							<h3>Per Month</h3>
+						</div>
+						<div class="block-data" id="month-data">
+							<span class="dollar-sign">$</span>28
+						</div>
+					</div>
+				</div>
+				<div class="cost-data-block" id="year-cost-data">
+					<div class="cost-data-content">
+						<div class="block-header" id="year-cost-header">
+							<h3>Per Year</h3>
+						</div>
+						<div class="block-data" id="year-data">
+							<span class="dollar-sign">$</span>20,096
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" id="console-output">
+				<div class="section-header" id="console-header">
+					<h3>Activity Console</h3>
+					<textarea id="console" name="myTextBox" cols="150" rows="15" readonly = "readonly">
+					</textarea>
+				</div>
+			</div>
+			<input id="save-toggle" type="button" name="start-toggle" value="Stop"/>
+		</div>
+		<script type="text/javascript">
+			function drawGraph(element, width, height, margin, tickSpacing){
+					// calculate the width and height
+					width = width - margin.left - margin.right;
+					height = height - margin.top - margin.bottom;
+					
+					// scale x and y axis of graph
+					// x axis ranges from 0 to the maximum size of the graph
+					var x = d3.scale.linear().range([0,width]);
+					// same for the y axis
+					var y = d3.scale.linear().range([height, 0]);
+					
+					// add the axises to the graph
+					var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(5);
+					var yAxis = d3.svg.axis().scale(y).orient("left").ticks(5);
+					
+					// add the graph and svg to element
+					var svg = d3.select(element).append("svg")
+						.attr("width", width+margin.left+margin.right)
+						.attr("height", height+margin.top+margin.bottom)
+						.append("g")
+						.attr("transform", "translate(" + margin.left + "," + margin.right + ")");
+			}
+			// scale highres images by one half
+			var highresImgs = document.getElementsByClassName("highres-img");
+			
+			// cost data blocks
+			var costDataContent = document.getElementsByClassName("cost-data-content");
+			
+			window.onload = function(){	
+				//rawGraph("#d3-graph", 600, 270, {top: 0, left: 0, right: 0, bottom: 0}, 5);
+				for(i = 0; i < costDataContent.length-1; i++){
+					costDataContent[i].style.borderRight = "solid 1px #f2f2f2";
+				}
+			
+				for(i = 0; i < highresImgs.length; i++){
+					highresImgs[i].width /= 2;
+				}
+			}
+		</script>
+		<script type="text/javascript">
+			// create a line number variable to pass into each output message to create line numbers in textarea
+			var lineNumber = 1;
+			var hourEnergy = 0;
+			var dailyEnergy = 0;
+			var hourEnergyArray = [];
+			var hour = 0;
+			var mysvg = document.getElementById("realtime-graph");
+			// given function, adds svg shapes to specified area
+			function addEltToSVG(svg, name, attrs){
+				var element = document.createElementNS("http://www.w3.org/2000/svg", name);
+				if (attrs === undefined) attrs = {};
+				for (var key in attrs) {
+					element.setAttributeNS(null, key, attrs[key]);
+				}
+				svg.appendChild(element);
+			}
+			
+			// function to stop the message simulation
+			function stopSimulation(){
+				clearInterval(simFunction);
+			}
+			
+			// Real time hourly output message passing simulation
+			document.getElementById("console").value = "";
+			
+			var simFunction = setInterval(function(){
+				// create bottom black line for energy graph- for looks only
+				addEltToSVG(mysvg, "rect", {"x": 40, "y": 295, "width": 1000,"height": 2,"fill": "black"});
+				for(var i = 0; i < applianceArray.length; i++){
+					if(hour%3 == 0){
+						applianceArray[i].turnOn(hour, lineNumber);
+						lineNumber++;
+					}else if(applianceArray[i].checkOn() == true){
+						applianceArray[i].turnOff(hour, lineNumber);
+						lineNumber++;
+					}else{
+						applianceArray[i].idleFunction(lineNumber);
+						lineNumber++;
+					}
+					// add the total power consumption for each hour and print to console
+					hourEnergy += applianceArray[i].powerConsumption;
+					dailyEnergy += applianceArray[i].powerConsumption;
+				}
+				// create message to be sent to output console
+				if(lineNumber < 10){
+					document.getElementById("console").value += lineNumber + ".   | The total energy used in hour: " +hour+" is " + hourEnergy +" watts. \n"
+				}else if(lineNumber < 100){
+					document.getElementById("console").value += lineNumber + ".  | The total energy used in hour: " +hour+" is " + hourEnergy +" watts. \n"
+				}else{
+					document.getElementById("console").value += lineNumber + ". | The total energy used in hour: " +hour+" is " + hourEnergy +" watts. \n"
+				}
+				graphHour(mysvg, hour, hourEnergy);
+				hourEnergy = 0;
+				hour++;
+				if(hour > 24){
+					// print to console: total energy used in the 24 hour simulation
+					if(lineNumber < 10){
+						document.getElementById("console").value += lineNumber + ".   | The total energy used today is " + dailyEnergy +" watts. \n"
+					}else if(lineNumber < 100){
+						document.getElementById("console").value += lineNumber + ".  | The total energy used today is " + dailyEnergy +" watts. \n"
+					}else{
+						document.getElementById("console").value += lineNumber + ". | The total energy used today is " + dailyEnergy +" watts. \n"
+					}
+					stopSimulation();
+				}
+			}, 1000);
+			
+			function graphHour(mysvg, hour, hourEnergy){
+				var multiplier = hourEnergy/10;
+				switch(hour){
+					case 1:
+						addEltToSVG(mysvg, "rect", {"x": 40, "y": 245, "width": 35,"height": 50,"fill": "blue"});
+						break;
+					case 2:
+						addEltToSVG(mysvg, "rect", {"x": 80, "y": 195, "width": 35,"height": 100,"fill": "blue"});
+						break;
+					case 3:
+						addEltToSVG(mysvg, "rect", {"x": 120, "y": 145, "width": 35,"height": 150,"fill": "blue"});
+						break;
+					case 4:
+						addEltToSVG(mysvg, "rect", {"x": 160, "y": 45, "width": 35,"height": 250,"fill": "blue"});
+						break;
+					case 5:
+						addEltToSVG(mysvg, "rect", {"x": 200, "y": 245, "width": 35,"height": 50,"fill": "blue"});
+						break;
+					case 6:
+						addEltToSVG(mysvg, "rect", {"x": 240, "y": 245, "width": 35,"height": 50,"fill": "blue"});
+						break;
+					case 7:
+						addEltToSVG(mysvg, "rect", {"x": 280, "y": 145, "width": 35,"height": 150,"fill": "blue"});
+						break;
+					case 8:
+						addEltToSVG(mysvg, "rect", {"x": 320, "y": 245, "width": 35,"height": 50,"fill": "blue"});
+						break;
+					case 9:
+						addEltToSVG(mysvg, "rect", {"x": 360, "y": 245, "width": 35,"height": 50,"fill": "blue"});
+						break;
+					case 10:
+						addEltToSVG(mysvg, "rect", {"x": 400, "y": 195, "width": 35,"height": 100,"fill": "blue"});
+						break;
+					case 11:
+						addEltToSVG(mysvg, "rect", {"x": 440, "y": 145, "width": 35,"height": 150,"fill": "blue"});
+						break;
+					case 12:
+						addEltToSVG(mysvg, "rect", {"x": 480, "y": 95, "width": 35,"height": 200,"fill": "blue"});
+						break;
+					case 13:
+						addEltToSVG(mysvg, "rect", {"x": 520, "y": 245, "width": 35,"height": 50,"fill": "blue"});
+						break;
+					case 14:
+						addEltToSVG(mysvg, "rect", {"x": 560, "y": 245, "width": 35,"height": 50,"fill": "blue"});
+						break;
+					case 15:
+						addEltToSVG(mysvg, "rect", {"x": 600, "y": 245, "width": 35,"height": 50,"fill": "blue"});
+						break;
+					case 16:
+						addEltToSVG(mysvg, "rect", {"x": 640, "y": 195, "width": 35,"height": 100,"fill": "blue"});
+						break;
+					case 17:
+						addEltToSVG(mysvg, "rect", {"x": 680, "y": 245, "width": 35,"height": 50,"fill": "blue"});
+						break;
+					case 18:
+						addEltToSVG(mysvg, "rect", {"x": 720, "y": 245, "width": 35,"height": 50,"fill": "blue"});
+						break;
+					case 19:
+						addEltToSVG(mysvg, "rect", {"x": 760, "y": 195, "width": 35,"height": 100,"fill": "blue"});
+						break;
+					case 20:
+						addEltToSVG(mysvg, "rect", {"x": 800, "y": 145, "width": 35,"height": 150,"fill": "blue"});
+						break;
+					case 21:
+						addEltToSVG(mysvg, "rect", {"x": 840, "y": 245, "width": 35,"height": 50,"fill": "blue"});
+						break;
+					case 22:
+						addEltToSVG(mysvg, "rect", {"x": 880, "y": 195, "width": 35,"height": 100,"fill": "blue"});
+						break;
+					case 23:
+						addEltToSVG(mysvg, "rect", {"x": 920, "y": 195, "width": 35,"height": 100,"fill": "blue"});
+						break;
+					case 24:
+						addEltToSVG(mysvg, "rect", {"x": 960, "y": 245, "width": 35,"height": 50,"fill": "blue"});
+						break;
+				}
+			}
+		</script>
+	</body>
+</html>
