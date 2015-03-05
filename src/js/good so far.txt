@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/main.css"/>
+	</head>
+	<body>
+		<div id="left-column">
+			<ul class="pointer" id="selected-appliances">
+			</ul>
+		</div>
+		<div id="right-column">
+			<div class="section">
+				<div class="section-header">Some Container</div>
+<!--sam-->
+<form>
+<input type="radio" onclick="alert('hello');" name="startValues" value="Default" checked>Default <!--SAM DON'T KNOW HOW TO GET onclick TO WORK IF DEFAULTLY SELECTED -->
+<input type="radio" onclick="alert('goodbye');" name="startValues" value="Custom">Custom 
+</form> 
+<!--sam-->
+
+
+			</div>
+			<div class="section" id="appliance-description">
+				<div class="section-header">Appliance Description</div>
+				<img id="large-appliance-image"/>
+				<ul>
+					<li id="appliance-name"></li>
+					<li id="appliance-watts"></li>
+					<div id="applianceAttributes"></div>
+					<!--<div id="addApplianceButtonArea"></div>-->
+				</ul>
+				
+			</div>
+			<div class="section">
+				<div class="section-header">Available Appliances</div>
+				<ul class="pointer" id="available-appliances"></ul>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/appliance-list.js"></script>
+		<script type="text/javascript">
+	
+	
+			/*
+				OnClick function for appliances in the available-appliances list
+			*/
+			function openApplianceDescription(elem){
+				var id = elem.getAttribute('appliance-id');
+
+				document.getElementById('appliance-name').innerHTML = defaultApplianceList[id].name;
+				document.getElementById('appliance-watts').innerHTML = defaultApplianceList[id].watts;
+
+				if(defaultApplianceList[id].gallons!=undefined)
+				{
+						applianceAttributes.innerHTML = "<input type='text' id='appliance-gallons' name='gallonsInput' value='gal'>"
+				}
+				else
+						applianceAttributes.innerHTML = "";
+
+				//addApplianceButtonArea.innerHTML = "<button onclick="addAppliance()">Add Appliance</button>";
+				
+/*var box = document.createElement("input").innerHTML ;box.type = "text";
+				if(defaultApplianceList[id].gallons!=undefined)
+				{
+					document.getElementById('appliance-gallons').innerHTML = defaultApplianceList[id].gallons;
+					//document.all.gallonsInput.style.visibility = 'visible'; 
+				}
+				else
+					document.all.gallonsInput.style.visibility = 'hidden'; 
+
+
+
+				//var newAppliance = new ApplianceObject({name:defaultApplianceList[id].name, energyUsage:defaultApplianceList[id].watts});
+*/
+			}
+
+					
+			/*
+				Add appliances to list
+			*/
+			var appListElem = document.getElementById('available-appliances');
+			for(var i = 0; i<defaultApplianceList.length; i++){
+				var node = document.createElement('li');
+				var text = document.createTextNode(defaultApplianceList[i].name);
+				node.appendChild(text);
+				node.setAttribute('appliance-id', i);
+				node.onclick = function(){openApplianceDescription(this);}
+				appListElem.appendChild(node);
+			}
+		</script>
+	</body>
+</html>

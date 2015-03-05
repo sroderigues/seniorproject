@@ -1,0 +1,34 @@
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+#left-column {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 200px;
+	overflow: scroll;
+	border-right: solid 1px #ccc;
+}
+#right-column {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 200px;
+	overflow: scroll;
+	padding: 20px;
+}
+.pointer{
+	cursor: pointer;
+}
+.section {
+	border-bottom: solid 1px #ccc;
+}
+.section-header {
+	font-size: 1.5em;
+	font-weight: bold;
+	padding: 20px;
+}
