@@ -2,6 +2,9 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/main.css"/>
+		<script type="text/javascript" src="js/functions.js"></script>
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
 	</head>
 	<body>
 		<div id="left-column">
@@ -39,54 +42,7 @@
 		</div>
 		<script type="text/javascript" src="js/appliance-list.js"></script>
 		<script type="text/javascript">
-	
-			function addAppliance(id)
-			{
-				newAppliance = defaultApplianceList[id].name;
-				
-				//myTextBox = document.getElementsByName("wattsInput");
-				//wattsValue = myTextBox.value;
-				var wattsValue = document.getElementsByName("wattsInput").value;	//JOE GET VALUES FROM TEXT BOX GUI'S HERE
-				//var wattsValue = document.getElementById('wattsInput').value;
-				console.log(wattsValue); 
-				userAppliances.innerHTML += "<button onclick='editAppliance("+id+")'>"+newAppliance+"</button><p></p>";	//add new button that can then be clicked to edit appliance
-			}
-
-			/*
-				OnClick function for appliances in the available-appliances list
-			*/
-			function openApplianceDescription(elem){
-				var id = elem.getAttribute('appliance-id');
-
-				document.getElementById('appliance-name').innerHTML = defaultApplianceList[id].name;	//all appliances should have name
-
-				var defaultWatts = defaultApplianceList[id].watts;
-				document.getElementById('appliance-watts').innerHTML = "<input type='text' id='appliance-watts' name='wattsInput' value='"+defaultWatts+"'>"	//all appliances should have wattage/energy consumption
-
-				if(defaultApplianceList[id].gallons!=undefined)		//checks if appliance has gallons WILL HAVE TO ADD FOR OTHER ATTRIBUTES
-				{
-					var defaultGallons = defaultApplianceList[id].gallons;
-					applianceAttributes.innerHTML = "<input type='text' id='appliance-gallons' name='gallonsInput' value='"+defaultGallons+"'>" 
-				}
-				else 	//resets attributes for next appliance clicked
-					applianceAttributes.innerHTML = "";
-
-				addApplianceButtonArea.innerHTML = "<button onclick='addAppliance("+id+")'>Add Appliance</button>"; 	//adds appliance once Add Appliance button clicked
-			}
-
-					
-			/*
-				Add appliances to list
-			*/
-			var appListElem = document.getElementById('available-appliances');
-			for(var i = 0; i<defaultApplianceList.length; i++){
-				var node = document.createElement('li');
-				var text = document.createTextNode(defaultApplianceList[i].name);
-				node.appendChild(text);
-				node.setAttribute('appliance-id', i);
-				node.onclick = function(){openApplianceDescription(this);}
-				appListElem.appendChild(node);
-			}
+			loadDefaultAppliances();
 		</script>
 	</body>
 </html>
