@@ -3,7 +3,10 @@
 */
 function addAppliance(id,edit)
 {
-	if(!edit)
+	//edit = true, user is editing an appliance already existing in list
+	//edit = false, user is adding a new appliance to list
+
+	if(!edit) //if new appliance generate new id and get its type
 	{
 		newAppliance = defaultApplianceList[id].type;
 
@@ -11,24 +14,27 @@ function addAppliance(id,edit)
 		   addAppliance.counter = 0;
 	}
 
-	wattsValue = document.getElementsByName('wattsInput')[0].value;
+	wattsValue = document.getElementsByName('wattsInput')[0].value; //get watts in input text box
 	
-	var appListElem = document.getElementById('selected-appliances');
-	var node = document.createElement('li');
+	if(!edit)
+	{
+		var node = document.createElement('li');
+		node.appendChild(document.createTextNode(newAppliance));
+		node.setAttribute('id', addAppliance.counter); //id in selected-appliances list should be the same as the appliance-id
+		node.setAttribute('appliance-id', addAppliance.counter); 
+		node.setAttribute('appliance-type', newAppliance);
+	}
+	else
+	{
+		var node = document.getElementById(id);
+	}
 
-	node.appendChild(document.createTextNode(defaultApplianceList[id].type));
-	console.log("Index: " + $( "li" ).index( appListElem ))
-	
-	/*MATT HERE. ALL I WANT TO BE ABLE TO DO IS CHANGE THE VALUES OF THE attributes
-	LIKE appliance-wattage AS TO UPDATE THE WATTAGE IF THE USER EDITS THE APPLIANCE
-	AND SAVES AGAIN. I CANNOT FIGURE OUT HOW TO ACCESS THE ALREADY CREATED LIST 
-	ELEMENTS/NODES IN ORDER TO READ/CHANGE THEIR ATTRIBUTES
-	*/
-	node.setAttribute('appliance-id', addAppliance.counter); 
-	node.setAttribute('appliance-type', newAppliance);
-	node.setAttribute('appliance-wattage', wattsValue);
+	node.setAttribute('appliance-wattage', wattsValue); //set watts in input text box to the attribute appliance-wattage
 	//node.setAttribute('appliance-gallonage', addAppliance.counter);
 	node.onclick = function(){openApplianceDescription(this);}
+console.log(node.getAttribute('appliance-type'))
+console.log(node.getAttribute('id'))
+	var appListElem = document.getElementById('selected-appliances');
 	appListElem.appendChild(node);
 	addAppliance.counter++;
 	//writeToFile();
@@ -71,7 +77,7 @@ function openApplianceDescription(elem)
 	if(!change)
 		addApplianceButtonArea.innerHTML = "<button onclick='addAppliance("+id+",false)'>Add Appliance</button>"; 	//adds appliance once Add Appliance button clicked
 	else
-		addApplianceButtonArea.innerHTML = "<button onclick='addAppliance("+id+",true)'>Save Changes</button>"; 	//adds appliance once Add Appliance button clicked
+		addApplianceButtonArea.innerHTML = "<button onclick='addAppliance("+id+",true)'>Save Changes</button> <button onclick='addAppliance("+id+",true)'>Remove Appliance</button>"; 	//adds appliance once Add Appliance button clicked
 }
 
 /*
