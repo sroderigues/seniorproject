@@ -8,41 +8,71 @@
 	</head>
 	<body>
 		<div id="left-column">
-			<ul class="pointer" id="selected-appliances"><!--SAM ASSUMING IM SUPPOSED TO PUT APPLIANCES HERE BUT DONT KNOW HOW-->
+			<center><!-- DO WE WANT THIS COLUMN CENTERED ONCE PICTURES?-->
+				<input type="button" value="Run Simulation" onclick="location.href='simulator-test.html'" id="goToSim"/>
+			<!-- going to simulation -->
+			<script type="text/javascript" src="js/simulator.js"></script>
+
+			<ul class="pointer" id="selected-appliances">
 			</ul>
-			<div id="userAppliances"></div><!--SAM PUT THEM HERE FOR NOW INSTEAD-->
+			</center><!-- DO WE WANT THIS COLUMN CENTERED ONCE PICTURES?-->
+			<div></div>
 		</div>
 		<div id="right-column">
-			<div class="section">
-				<div class="section-header">Some Container</div>
-<!--sam-->
+				<div class="section-header">
+					<table>
+					<tr>
+					<td style="width:800px">Schedule</td>
+					<td style="width:800px">Group</td>
+					</tr>
+					</table>
+				</div>
+				<div>
+					<!--SAM-->
+					<table>
+					<tr>
+					<td id="schedule-section" style="width:800px"><div><button onclick='openScheduleDescription("+id+",false)'>Add Schedule</button></div></td>
+					<td id="group-section" style="width:800px"><div><button onclick='addGroup("+id+",false)'>Add Group</button></div></td>
+					</tr>
+					</table>
+				</div>
+
+<!--SAM-->
+				
+
+<!--
 <form>
-<input type="radio" onclick="alert('hello');" name="startValues" value="Default" checked>Default <!--SAM VERY START OF DEFAULT RADIO CHOICE -->
+<input type="radio" onclick="alert('hello');" name="startValues" value="Default" checked>Default <!--SAM VERY START OF DEFAULT RADIO CHOICE 
 <input type="radio" onclick="alert('goodbye');" name="startValues" value="Custom">Custom 
 </form> 
-<!--sam-->
+-->
 
 
-			</div>
+			<div class="section"></div>
 			<div class="section" id="appliance-description">
-				<div class="section-header">Appliance Description</div>
-				<img id="large-appliance-image"/>
+				<!-- <div class='section-header'>Appliance Description</div>
+				<img id='large-appliance-image'/>
 				<ul>
-					<li id="appliance-name"></li>
-					<li id="appliance-watts"></li>
-					<div id="applianceAttributes"></div>
-					<div id="addApplianceButtonArea"></div>
+					<li id='appliance-name'></li>
+					<li id='appliance-watts'></li>
+					<div id='applianceAttributes'></div>
+					<div id='appliance-schedule'></div>
 				</ul>
+				"<div id='addApplianceButtonArea'></div>"-->
 				
 			</div>
-			<div class="section">
+			<div> <!--class="section"-->
 				<div class="section-header">Available Appliances</div>
 				<ul class="pointer" id="available-appliances"></ul>
 			</div>
+			<!--SAM FOR DEFAULT MODE<input type="checkbox" onLoad="document.getElementById('theSubmitButton').click();">Check the box to simulate a button click
+			<br>
+			<input type="button" name="theSubmitButton" id="theSubmitButton" value="Button" onClick="alert('The button was clicked.');">-->
 		</div>
 		<script type="text/javascript" src="js/appliance-list.js"></script>
 		<script type="text/javascript">
 			loadDefaultAppliances();
+
 		</script>
 	</body>
 </html>

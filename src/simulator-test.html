@@ -3,7 +3,27 @@
 	<head>
 	</head>
 	<body>
-		<input type="button" value="Start/Stop" id="runSim"/>
+		
+		<!--<input type="button" value="Start/Stop" id="runSim"/>-->
+		<script type="text/javascript" src="js/appliance-list.js"></script>
+		<script type="text/javascript" src="js/functions.js"></script>
 		<script type="text/javascript" src="js/simulator.js"></script>
+		<script type="text/javascript" src="js/ApplianceObject.js"></script>
+		<script type="text/javascript">
+			//getting array from local storage
+			var appArray = JSON.parse(localStorage.myArray);
+			console.log(appArray);
+			//dummy values 
+			var d = 5;
+			var arraySchedule = 5;
+			var c = 400;
+			var p = 1;
+			var arr = [];
+			//going to need a loop to go through all appliances
+			ApplianceObject(appArray[0][1], appArray[0][2], d, arraySchedule, c, p, arr);
+			console.log(appArray[0][1]);
+			console.log(appArray[0][2]);
+			//console.log(ApplianceObject(appArray[0][1], appArray[0][2], d, arraySchedule, c, p, arr));
+		</script>
 	</body>
 </html>
